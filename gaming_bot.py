@@ -1,4 +1,27 @@
-import os
+from flask import Flask
+from threading import Thread
+import telebot # یا کتابخانه‌ای که استفاده می‌کنید
+
+# 1. تنظیم Flask برای اینکه Render را راضی نگه دارد
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+# 2. کد اصلی ربات شما
+def run_bot():
+    # اینجا همان کد اصلی ربات خود را بگذارید
+    # مثلا: bot.polling(none_stop=True)
+    pass
+
+# 3. اجرای همزمان (Multi-threading)
+if __name__ == "__main__":
+    # اجرای ربات در پس‌زمینه
+    Thread(target=run_bot).start()
+    # اجرای سرور وب در کانتینر اصلی
+    app.run(host='0.0.0.0', port=5000)
+ os
 import json
 import requests
 import feedparser
@@ -54,3 +77,8 @@ def check_and_send():
 
 if __name__ == '__main__':
     app.run()
+if __name__ == "__main__":
+    # اجرای ربات در یک رشته (Thread) جداگانه
+    Thread(target=run_bot).start()
+    # اجرای سرور وب برای راضی نگه داشتن Render
+    app.run(host='0.0.0.0', port=5000)
