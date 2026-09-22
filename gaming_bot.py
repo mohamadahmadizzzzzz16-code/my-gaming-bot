@@ -1,5 +1,3 @@
-from flask import Flask
-from threading import Thread
 import telebot # یا کتابخانه‌ای که استفاده می‌کنید
 
 # 1. تنظیم Flask برای اینکه Render را راضی نگه دارد
