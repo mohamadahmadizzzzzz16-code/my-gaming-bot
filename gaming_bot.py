@@ -6,10 +6,10 @@ from flask import Flask
 
 app = Flask(__name__)
 
-# تنظیمات
-BOT_TOKEN = "8735821967:AAHipO565_SZyXXGBLdLPHfH_hD7VKUuzfA"
+# برای امنیت، توکن را از متغیر محیطی می‌خوانیم
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "YOUR_TOKEN_HERE")
 DESTINATIONS = ["@MajorCurrencies1", "-100893455426"]
-RSS_FEED_URL = "https://www.zoomg.ir/feed/"
+RSS_FEED_URL = "https://www.zoomg.ir/feed/" # فید زومجی
 HISTORY_FILE = "sent_links_gaming.json"
 
 def load_sent_links():
@@ -33,9 +33,6 @@ def send_telegram_message(chat_id, text):
         print(f"Error: {e}")
 
 @app.route('/')
-def home():
-    return "Bot is running perfectly!"
-
 @app.route('/run')
 def check_and_send():
     sent_links = load_sent_links()
@@ -44,19 +41,16 @@ def check_and_send():
         response = requests.get(RSS_FEED_URL, headers=headers, timeout=10)
         feed = feedparser.parse(response.text)
         if not feed.entries: return "Feed empty", 500
-        
-        # چک کردن جدیدترین اخبار
         for entry in reversed(feed.entries[:3]):
             if entry.link not in sent_links:
                 msg = f"<b>{entry.title}</b>\n\n{entry.link}"
                 for chat_id in DESTINATIONS:
                     send_telegram_message(chat_id, msg)
                 sent_links.append(entry.link)
-        
         save_sent_links(sent_links)
         return "Bot checked and sent successfully!"
     except Exception as e:
         return f"Error: {str(e)}", 500
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+if __name__ == '__main__':
+    app.run()
