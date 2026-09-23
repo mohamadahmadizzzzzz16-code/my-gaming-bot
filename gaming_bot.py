@@ -7,7 +7,7 @@ from flask import Flask
 app = Flask(__name__)
 
 # برای امنیت، توکن را از متغیر محیطی می‌خوانیم
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "YOUR_TOKEN_HERE")
+BOT_TOKEN = ("8735821967:AAHipO565_SZyXXGBLdLPHfH_hD7VKUuzfA")
 DESTINATIONS = ["@MajorCurrencies1", "-100893455426"]
 RSS_FEED_URL = "https://www.zoomg.ir/feed/" # فید زومجی
 HISTORY_FILE = "sent_links_gaming.json"
